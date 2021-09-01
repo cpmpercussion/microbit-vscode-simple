@@ -15,10 +15,12 @@ ENTRY(Reset_Handler)
 
 /* Specifies the size and location of the memory areas */
 MEMORY {
-    RAM (rw)   : ORIGIN = 0x20000000, LENGTH = 96K
-    RAM2 (rw)  : ORIGIN = 0x10000000, LENGTH = 32K
-    FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 1024K
+    FLASH   (rx)  : ORIGIN = 0x00000000,      LENGTH = 512K
+    RAM     (rwx) : ORIGIN = 0x20000000,      LENGTH = 124K
+    CODERAM (rwx) : ORIGIN = 0x00800000+124K, LENGTH = 4K
 }
+
+OUTPUT_FORMAT ("elf32-littlearm")
 
 /*
   Specifies the end of the main stack (see ARM reference manual B1.4.1) This variable is
