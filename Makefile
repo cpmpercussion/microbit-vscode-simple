@@ -12,7 +12,7 @@ SRCS := $(shell find src lib -name '*.c' -or -name '*.S')
 OBJS := $(addsuffix .o,$(basename $(SRCS)))
 
 CFLAGS ?=-nostdlib -nostartfiles -mcpu=cortex-m4 -mthumb -Wall -Werror -g
-LDFLAGS ?=-nostdlib -nostartfiles -T lib/link.ld --print-memory-usage
+LDFLAGS ?=-nostdlib -nostartfiles -T lib/nRF52833.ld --print-memory-usage
 
 TARGET ?= program.elf
 
@@ -31,7 +31,7 @@ $(TARGET): $(OBJS)
 upload: $(TARGET)
 	$(OBJCOPY) -O binary $(TARGET) program.bin
 
-	$(OPENOCD) -f board/stm32l4discovery.cfg -c "program program.elf verify reset exit"
+	$(OPENOCD) -f interface/cmsis-dap.cfg -f target/nrf52.cfg -c "program program.elf verify reset exit"
 
 clean:
 	rm $(TARGET) $(OBJS) >/dev/null 2>/dev/null || true
